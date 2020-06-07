@@ -30,7 +30,7 @@ jobs:
             sudo apt-get install mysql-client
       - run: npm install
       - run: npm run bootstrap
-      - run: npm run dev
+      # - run: npm run dev
 
 workflows:
   version: 2
