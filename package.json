@@ -1,0 +1,16 @@
+{
+  "name": "cooking",
+  "version": "0.0.1",
+  "description": "Cooking project",
+  "author": "Bi Nguyen",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "lerna": "lerna",
+    "dev": "lerna run dev --parallel",
+    "bootstrap": "lerna bootstrap"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.0"
+  }
+}
