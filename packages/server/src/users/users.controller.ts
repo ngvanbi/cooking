@@ -6,27 +6,26 @@ import { ResultStatusDto } from '@helper/dto';
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Post()
+  @HttpCode(201)
+  @ApiBody({ required: true, type: UserCreateDto })
+  @ApiResponse({ status: 201, description: 'CREATED', type: ResultStatusDto })
+  async create(@Body() data: UserCreateDto): Promise<ResultStatusDto> {
+    let status: ResultStatusDto = {
+      success: true,
+      message: 'User registered',
+    };
+    try {
+      await this.usersService.create(data);
+    } catch (err) {
+      status = {
+        success: false,
+        message: err.message,
+      };
     }
 
-    @Post()
-    @HttpCode(201)
-    @ApiBody({required: true, type: UserCreateDto})
-    @ApiResponse({status: 201, description: 'CREATED', type: ResultStatusDto})
-    async create(@Body() data: UserCreateDto): Promise<ResultStatusDto> {
-        let status: ResultStatusDto = {
-            success: true,
-            message: 'User registered'
-        }
-        try {
-            await this.usersService.create(data);
-        } catch (err) {
-            status = {
-                success: false,
-                message: err.message
-            }
-        }
-
-        return status;
-    }
+    return status;
+  }
 }
