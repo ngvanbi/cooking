@@ -1,14 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { ExtendedEntity } from '@helper/index';
-import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { IsEmail, MinLength } from 'class-validator';
 import * as bcrypt from 'bcrypt';
+import { UserRoleEntity } from '@users/entity/user.role.entity';
 
 @Entity('user')
 export class UserEntity extends ExtendedEntity {
   @ApiProperty()
   @PrimaryGeneratedColumn('increment')
-  id: string;
+  id: number;
 
   @ApiProperty()
   @IsEmail()
@@ -35,6 +42,12 @@ export class UserEntity extends ExtendedEntity {
   @ApiProperty()
   @Column({ name: 'is_active', default: true })
   isActive: boolean;
+
+  @ManyToOne(
+    () => UserRoleEntity,
+    role => role.id,
+  )
+  role: UserRoleEntity;
 
   @BeforeInsert()
   async hashPassword() {

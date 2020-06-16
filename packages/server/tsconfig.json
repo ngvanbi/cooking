@@ -11,7 +11,9 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@helper/*": ["src/_helper/*"]
+      "@helper/*": ["src/_helper/*"],
+      "@users/*": ["src/users/*"],
+      "@auth/*": ["src/auth/*"]
     }
   },
   "exclude": ["node_modules", "dist"]

@@ -4,6 +4,7 @@ import { UserEntity } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserCreateDto } from './dto/user.create.dto';
 import { UserDto } from './dto/user.dto';
+import { toUserDto } from '@helper/dto';
 
 @Injectable()
 export class UsersService {
@@ -39,8 +40,6 @@ export class UsersService {
       ...userCreate,
     });
     await this.userRepository.save(user);
-    const userDto: UserDto = { ...user };
-    delete userDto['password'];
-    return userDto;
+    return toUserDto(user);
   }
 }

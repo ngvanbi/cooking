@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity, Column, CreateDateColumn, BeforeUpdate } from 'typeorm';
 
 export class ExtendedEntity extends BaseEntity {
-  public id?: string;
+  public id?: string | number;
 
   @Column({ name: 'is_deleted', nullable: false, default: false })
   public isDeleted: boolean;
