@@ -21,8 +21,27 @@ export class UsersService {
     return this.userRepository.findOne(options);
   }
 
+  async findOneById(id: number): Promise<UserEntity> {
+    try {
+      const user = await this.userRepository.findOneOrFail(id);
+      // Need to check user
+      return user;
+    } catch (e) {
+      throw new HttpException(
+        {
+          error: 'Database',
+          message: 'Item not found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
   findByEmail(email: string): Promise<UserEntity> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['role'],
+    });
   }
 
   async delete(id: string): Promise<void> {

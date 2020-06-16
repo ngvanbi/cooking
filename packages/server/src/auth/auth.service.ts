@@ -22,15 +22,22 @@ export class AuthService {
     return null;
   }
 
-  async login(userDto: UserDto) {
-    const { id, email, firstName, lastName, role } = userDto;
+  async createAuthToken(userDto: UserDto) {
+    const { id, email, role } = userDto;
     let roleName = '';
     if (role) {
       roleName = role.roleName;
     }
-    const user = { id, email, firstName, lastName, role: roleName };
+    const user = { sub: id, email, role: roleName };
+
     return {
+      expiresIn: new Date().getTime(),
       accessToken: this.jwtService.sign(user),
+      refreshToken: this.jwtService.sign({ id }),
     };
+  }
+
+  async validateJwt(id: number) {
+    return await this.usersService.findOneById(id);
   }
 }
