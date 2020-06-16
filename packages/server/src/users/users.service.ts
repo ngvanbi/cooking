@@ -36,7 +36,7 @@ export class UsersService {
       throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
     }
 
-    const user: UserEntity = await this.userRepository.create({
+    const user: UserEntity = this.userRepository.create({
       ...userCreate,
     });
     await this.userRepository.save(user);
